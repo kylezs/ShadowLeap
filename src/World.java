@@ -11,6 +11,7 @@ public class World {
   private static final int TILE_SIZE = 48;
   private static final int START_WATER = 336;
   private static final int END_WATER = 48;
+
 	public World() throws SlickException {
 		// set the background tiles
     grassTile = new Image("assets/grass.png");
@@ -24,12 +25,12 @@ public class World {
 	public void render(Graphics g) {
     // Draw all of the sprites in the game
 
-    // render the water
+    // draw the water
     for (int y_coord = START_WATER; y_coord >= END_WATER; y_coord -= TILE_SIZE) {
       draw_row(waterTile, y_coord);
     }
 
-    // render the grass
+    // draw the grass
     draw_row(grassTile, 672);
     draw_row(grassTile, 384);
   }

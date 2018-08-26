@@ -5,12 +5,7 @@
  * Extended by Kyle Zsembery, University of Melbourne
  */
 
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.*;
 
 /**
  * Main class for the game.
@@ -21,6 +16,11 @@ public class App extends BasicGame {
     public static final int SCREEN_WIDTH = 1024;
     /** screen height, in pixels */
     public static final int SCREEN_HEIGHT = 768;
+    public static final int TILE_SIZE = 48;
+
+    private Sprite player;
+    private static final float START_PLAYER_X = 512;
+    private static final float START_PLAYER_Y = 720;
 
     private World world;
 
@@ -32,6 +32,8 @@ public class App extends BasicGame {
     public void init(GameContainer gc)
             throws SlickException {
         world = new World();
+//        Image playerImage = new Image("assets/frog.png");
+        player = new Sprite("assets/frog.png", START_PLAYER_X, START_PLAYER_Y);
     }
 
     /** Update the game state for a frame.
@@ -53,6 +55,7 @@ public class App extends BasicGame {
     public void render(GameContainer gc, Graphics g)
             throws SlickException {
         world.render(g);
+        player.render();
     }
 
     /** Start-up method. Creates the game and runs it.
