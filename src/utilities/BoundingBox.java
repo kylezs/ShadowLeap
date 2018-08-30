@@ -7,20 +7,22 @@ package utilities;
 import org.newdawn.slick.Image;
 
 public class BoundingBox {
+	private static final float FUZZ = 0.95f;
+	
 	private float left;
 	private float top;
 	private float width;
 	private float height;
 	
 	public BoundingBox(float x, float y, float width, float height) {
-		this.width = width;
-		this.height = height;
+		setWidth(width);
+		setHeight(height);
 		setX(x);
 		setY(y);
 	}
 	public BoundingBox(Image img, float x, float y) {
-		width = img.getWidth();
-		height = img.getHeight();
+		setWidth(img.getWidth());
+		setHeight(img.getHeight());
 		setX(x);
 		setY(y);
 	}
@@ -42,10 +44,10 @@ public class BoundingBox {
 	}
 	
 	public void setWidth(float w) {
-		width = w;
+		width = w * FUZZ;
 	}
 	public void setHeight(float h) {
-		height = h;
+		height = h * FUZZ;
 	}
 	
 	public float getLeft() {

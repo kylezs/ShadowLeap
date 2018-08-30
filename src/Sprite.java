@@ -1,3 +1,4 @@
+import helper.Position;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -5,7 +6,7 @@ import org.newdawn.slick.SlickException;
 public class Sprite {
 
   private Image spriteImage;
-  private float x, y;
+  protected Position position;
 
   public Sprite(String imageSrc, float x, float y) {
     // Why would the constructor need a path to an image, and a coordinate?
@@ -15,17 +16,17 @@ public class Sprite {
       System.out.println("[Error] The image could not be loaded from: " + imageSrc);
     }
 
-    this.x = x;
-    this.y = y;
+    position = new Position(x, y);
   }
 
   public void update(Input input, int delta) {
     // How can this one method deal with different types of sprites?
+    // Answer: overriding
   }
 
   public void render() {
     // centre the image by moving it left by half its tile size
-    this.spriteImage.draw(this.x - (App.TILE_SIZE/2), this.y);
+    this.spriteImage.draw(position.getX(), position.getY());
   }
 
   public void contactSprite(Sprite other) {

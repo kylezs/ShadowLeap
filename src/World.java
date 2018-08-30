@@ -12,6 +12,9 @@ public class World {
   private static final int START_WATER = 336;
   private static final int END_WATER = 48;
 
+  private static final float START_GRASS = 672;
+  private static final float END_GRASS = 384;
+
 	public World() throws SlickException {
 		// set the background tiles
     grassTile = new Image("assets/grass.png");
@@ -27,15 +30,20 @@ public class World {
 
     // draw the water
     for (int y_coord = START_WATER; y_coord >= END_WATER; y_coord -= TILE_SIZE) {
-      draw_row(waterTile, y_coord);
+      drawRow(waterTile, y_coord);
     }
 
     // draw the grass
-    draw_row(grassTile, 672);
-    draw_row(grassTile, 384);
+    drawRow(grassTile, START_GRASS);
+    drawRow(grassTile, END_GRASS);
+
   }
 
-  private static void draw_row(Image tile, int y_coord) {
+  private static void drawEnemyRow(Image spriteImage, float speed, String dir, float theRow, float spread) {
+    ;
+  }
+
+  private static void drawRow(Image tile, float y_coord) {
     for (int j = 0; j <= (App.SCREEN_WIDTH / TILE_SIZE); j++)
       tile.draw(TILE_SIZE * j, y_coord);
     }

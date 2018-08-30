@@ -16,9 +16,10 @@ public class App extends BasicGame {
     public static final int SCREEN_WIDTH = 1024;
     /** screen height, in pixels */
     public static final int SCREEN_HEIGHT = 768;
+    /** tile size + length/height of each jump */
     public static final int TILE_SIZE = 48;
 
-    private Sprite player;
+    private Player player;
     private static final float START_PLAYER_X = 512;
     private static final float START_PLAYER_Y = 720;
 
@@ -33,7 +34,7 @@ public class App extends BasicGame {
             throws SlickException {
         world = new World();
 //        Image playerImage = new Image("assets/frog.png");
-        player = new Sprite("assets/frog.png", START_PLAYER_X, START_PLAYER_Y);
+        player = new Player("assets/frog.png", START_PLAYER_X, START_PLAYER_Y);
     }
 
     /** Update the game state for a frame.
@@ -46,6 +47,7 @@ public class App extends BasicGame {
         // Get data about the current input (keyboard state).
         Input input = gc.getInput();
         world.update(input, delta);
+        player.update(input, delta);
     }
 
     /** Render the entire screen, so it reflects the current game state.
