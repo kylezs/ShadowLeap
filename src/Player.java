@@ -1,3 +1,4 @@
+import helper.Constants;
 import org.newdawn.slick.Input;
 
 public class Player extends Sprite {
@@ -7,21 +8,26 @@ public class Player extends Sprite {
   }
 
   public void update(Input input, int delta) {
-
     if (input.isKeyPressed(Input.KEY_UP)) {
-      position.setY(position.getY() - App.TILE_SIZE);
+      position.setY(position.getY() - Constants.TILE_SIZE);
     }
 
     if (input.isKeyPressed(Input.KEY_DOWN)) {
-      position.setY(position.getY() + App.TILE_SIZE);
+      position.setY(position.getY() + Constants.TILE_SIZE);
     }
 
     if (input.isKeyPressed(Input.KEY_RIGHT)) {
-      position.setX(position.getX() + App.TILE_SIZE);
+      float newPos = position.getX() + Constants.TILE_SIZE;
+      if (!(newPos >= Constants.SCREEN_WIDTH - 8)) {
+        position.setX(newPos);
+      }
     }
 
     if (input.isKeyPressed(Input.KEY_LEFT)) {
-      position.setX(position.getX() - App.TILE_SIZE);
+      float newPos = position.getX() - Constants.TILE_SIZE;
+      if (!(newPos <= 0 - Constants.TILE_SIZE + 8)) {
+        position.setX(newPos);
+      }
     }
   }
 }

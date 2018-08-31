@@ -6,22 +6,13 @@
  */
 
 import org.newdawn.slick.*;
+import helper.Constants;
 
 /**
  * Main class for the game.
  * Handles initialisation, input and rendering.
  */
 public class App extends BasicGame {
-    /** screen width, in pixels */
-    public static final int SCREEN_WIDTH = 1024;
-    /** screen height, in pixels */
-    public static final int SCREEN_HEIGHT = 768;
-    /** tile size + length/height of each jump */
-    public static final int TILE_SIZE = 48;
-
-    private Player player;
-    private static final float START_PLAYER_X = 512;
-    private static final float START_PLAYER_Y = 720;
 
     private World world;
 
@@ -33,8 +24,7 @@ public class App extends BasicGame {
     public void init(GameContainer gc)
             throws SlickException {
         world = new World();
-//        Image playerImage = new Image("assets/frog.png");
-        player = new Player("assets/frog.png", START_PLAYER_X, START_PLAYER_Y);
+
     }
 
     /** Update the game state for a frame.
@@ -47,7 +37,7 @@ public class App extends BasicGame {
         // Get data about the current input (keyboard state).
         Input input = gc.getInput();
         world.update(input, delta);
-        player.update(input, delta);
+
     }
 
     /** Render the entire screen, so it reflects the current game state.
@@ -57,7 +47,6 @@ public class App extends BasicGame {
     public void render(GameContainer gc, Graphics g)
             throws SlickException {
         world.render(g);
-        player.render();
     }
 
     /** Start-up method. Creates the game and runs it.
@@ -67,7 +56,7 @@ public class App extends BasicGame {
             throws SlickException {
         AppGameContainer app = new AppGameContainer(new App());
         app.setShowFPS(true);
-        app.setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, false);
+        app.setDisplayMode(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, false);
         app.start();
     }
 

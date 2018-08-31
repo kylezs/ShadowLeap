@@ -1,4 +1,5 @@
 package helper;
+import helper.Constants;
 
 public class Position {
   private float x;
@@ -17,12 +18,11 @@ public class Position {
     return y;
   }
 
-  // TODO: ensure sprite can't go off screen here... maybe just player though
   public void setX(float newX) {
-    this.x = newX;
+      this.x = newX;
   }
 
   public void setY(float newY) {
-    this.y = newY;
+      this.y = newY;
   }
 }

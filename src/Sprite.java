@@ -1,12 +1,15 @@
+import helper.Constants;
 import helper.Position;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import utilities.BoundingBox;
 
 public class Sprite {
 
-  private Image spriteImage;
+  protected Image spriteImage;
   protected Position position;
+  private BoundingBox boundingBox;
 
   public Sprite(String imageSrc, float x, float y) {
     // Why would the constructor need a path to an image, and a coordinate?
@@ -17,6 +20,7 @@ public class Sprite {
     }
 
     position = new Position(x, y);
+    boundingBox = new BoundingBox(x, y, Constants.TILE_SIZE, Constants.TILE_SIZE);
   }
 
   public void update(Input input, int delta) {
