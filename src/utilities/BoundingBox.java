@@ -72,9 +72,9 @@ public class BoundingBox {
 	}
 	
 	public boolean intersects(BoundingBox other) {
-		return !(other.left > getRight()
+    return !(other.left > getRight()
 			  || other.getRight()  < left
 			  || other.top > getBottom()
 			  || other.getBottom() < top);
-	}
+  }
 }

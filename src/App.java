@@ -14,6 +14,7 @@ import helper.Constants;
  */
 public class App extends BasicGame {
 
+    private static AppGameContainer app;
     private World world;
 
     public App() {
@@ -49,12 +50,16 @@ public class App extends BasicGame {
         world.render(g);
     }
 
-    /** Start-up method. Creates the game and runs it.
+  public static AppGameContainer getApp() {
+    return app;
+  }
+
+  /** Start-up method. Creates the game and runs it.
      * @param args Command-line arguments (ignored).
      */
     public static void main(String[] args)
             throws SlickException {
-        AppGameContainer app = new AppGameContainer(new App());
+        app = new AppGameContainer(new App());
         app.setShowFPS(true);
         app.setDisplayMode(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, false);
         app.start();

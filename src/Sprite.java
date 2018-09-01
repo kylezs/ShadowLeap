@@ -1,8 +1,5 @@
-import helper.Constants;
 import helper.Position;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import utilities.BoundingBox;
 
 public class Sprite {
@@ -21,11 +18,17 @@ public class Sprite {
 
     position = new Position(x, y);
     boundingBox = new BoundingBox(spriteImage, x, y);
+
   }
 
   public void update(Input input, int delta) {
     // How can this one method deal with different types of sprites?
     // Answer: overriding
+  }
+
+  public void updateBoundingBox(float x, float y) {
+    boundingBox.setX(x);
+    boundingBox.setY(y);
   }
 
   public void render() {
@@ -35,7 +38,15 @@ public class Sprite {
 
   public void contactSprite(Sprite other) {
     if (this.boundingBox.intersects(other.boundingBox)) {
-      System.out.println("Dead");// Should be called when one sprite makes contact with another.
+      dead();
+    }
+  }
+
+  public void dead() {
+    try {
+      App.getApp().reinit();
+    } catch (SlickException e) {
+      e.printStackTrace();
     }
   }
 }

@@ -23,7 +23,6 @@ public class Player extends Sprite {
       if (!(newPos >= Constants.SCREEN_HEIGHT)) {
         position.setY(newPos);
       }
-      System.out.println("At pos: " + position.getX() + ", " + position.getY());
     }
 
     if (input.isKeyPressed(Input.KEY_RIGHT)) {
@@ -39,5 +38,10 @@ public class Player extends Sprite {
         position.setX(newPos);
       }
     }
+    // if the player enters the water
+    if (position.getY() <= Constants.START_WATER && position.getY() >= Constants.END_WATER) {
+      dead();
+    }
+    updateBoundingBox(position.getX(), position.getY());
   }
 }

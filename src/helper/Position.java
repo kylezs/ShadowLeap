@@ -1,5 +1,4 @@
 package helper;
-import helper.Constants;
 
 public class Position {
   private float x;

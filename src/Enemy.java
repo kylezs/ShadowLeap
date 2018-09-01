@@ -31,5 +31,6 @@ public class Enemy extends Sprite {
         this.position.setX(newPos);
       }
     }
+    updateBoundingBox(position.getX(), position.getY());
   }
 }
