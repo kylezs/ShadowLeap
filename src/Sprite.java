@@ -20,7 +20,7 @@ public class Sprite {
     }
 
     position = new Position(x, y);
-    boundingBox = new BoundingBox(x, y, Constants.TILE_SIZE, Constants.TILE_SIZE);
+    boundingBox = new BoundingBox(spriteImage, x, y);
   }
 
   public void update(Input input, int delta) {
@@ -34,6 +34,8 @@ public class Sprite {
   }
 
   public void contactSprite(Sprite other) {
-    // Should be called when one sprite makes contact with another.
+    if (this.boundingBox.intersects(other.boundingBox)) {
+      System.out.println("Dead");// Should be called when one sprite makes contact with another.
+    }
   }
 }

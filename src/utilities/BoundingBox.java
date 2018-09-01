@@ -26,6 +26,7 @@ public class BoundingBox {
 		setX(x);
 		setY(y);
 	}
+
 	public BoundingBox(BoundingBox bb) {
 		width = bb.width;
 		height = bb.height;

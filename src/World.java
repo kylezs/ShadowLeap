@@ -24,9 +24,6 @@ public class World {
   private static final float START_GRASS = 672;
   private static final float END_GRASS = 384;
 
-
-  EnemyArray busArray;
-
   private ArrayList<EnemyArray> allBusRows = new ArrayList<>();
 
 
@@ -56,9 +53,9 @@ public class World {
 		// Update all of the sprites in the game
     player.update(input, delta);
     for (EnemyArray busArray : allBusRows) {
-
       for (Enemy bus : busArray.getBusArray()) {
         bus.update(input, delta, busArray.getStartNextAt());
+        bus.contactSprite(player);
       }
     }
 	}
