@@ -25,7 +25,6 @@ public class Enemy extends Sprite {
     } else if (this.direction.equals(Constants.LEFT)) {
       float newPos = this.position.getX() - delta * this.speed;
       if (newPos < startNextAt) {
-//        System.out.println("Bus now at 0 - separationDistance: -" + separationDistance + " move bus to: " + Constants.SCREEN_WIDTH);
         this.position.setX(Constants.SCREEN_WIDTH);
       } else {
         this.position.setX(newPos);

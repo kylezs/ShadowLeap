@@ -70,6 +70,7 @@ public class World {
     player.render();
   }
 
+  // Create tiles for however many tiles that fit on the screen
   private static void drawRow(Image tile, float y_coord) {
     for (int j = 0; j <= (Constants.SCREEN_WIDTH / Constants.TILE_SIZE); j++)
       tile.draw(Constants.TILE_SIZE * j, y_coord);
@@ -78,12 +79,15 @@ public class World {
 	private EnemyArray busRow(float y, float offset, String dir, float separationDist) {
 	  EnemyArray newEnemyArray = new EnemyArray();
 	  ArrayList<Enemy>busArray = new ArrayList<>();
+
+	  // create however many buses required per row
 	  int i = 0;
     while (i * separationDist < Constants.SCREEN_WIDTH + separationDist) {
-      Enemy a_bus = new Enemy("assets/bus.png", offset + i * separationDist, y, (float)0.15, dir, separationDist);
+      Enemy a_bus = new Enemy("assets/bus.png", offset + i * separationDist, y, Constants.BUS_SPEED, dir, separationDist);
       busArray.add(a_bus);
       i++;
     }
+    // store a startNextAt which acts as an offset value when uniformly separating buses
     float startNextAt = Constants.SCREEN_WIDTH - (separationDist * (i-1));
     newEnemyArray.setBusArray(busArray);
     newEnemyArray.setStartNextAt(startNextAt);

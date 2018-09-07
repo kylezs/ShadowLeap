@@ -20,4 +20,6 @@ public class Constants {
 
   public static final float START_GRASS = 672;
   public static final float END_GRASS = 384;
+
+  public static final float BUS_SPEED = (float) 0.15;
 }

@@ -11,6 +11,7 @@ public class Player extends Sprite {
 
   public void update(Input input, int delta) {
 
+    // move the player one tile in whatever direction key is pressed
     if (input.isKeyPressed(Input.KEY_UP)) {
       float newPos = position.getY() - Constants.TILE_SIZE;
       if (!(newPos <= 0 - Constants.TILE_SIZE)) {
