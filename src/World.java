@@ -25,6 +25,7 @@ public class World {
     player = new Player("assets/frog.png", Constants.START_PLAYER_X, Constants.START_PLAYER_Y);
 
     // init 5 rows of buses, 432, 480, 528, 576, 624
+    // TODO: Will be generated dynamically by level info
     EnemyArray busArray = busRow(432, 48, Constants.LEFT, (float) 6.5 * Constants.TILE_SIZE);
     allBusRows.add(busArray);
     busArray = busRow(480, 0, Constants.RIGHT, (float) 5 * Constants.TILE_SIZE);
@@ -35,7 +36,6 @@ public class World {
     allBusRows.add(busArray);
     busArray = busRow(624, 250, Constants.LEFT, (float) 6.5 * Constants.TILE_SIZE);
     allBusRows.add(busArray);
-
 	}
 	
 	public void update(Input input, int delta) {

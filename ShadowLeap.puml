@@ -1,0 +1,30 @@
+@startuml
+
+class App
+class Enemy
+class EnemyArray
+class Sprite
+class Player
+class World
+
+List <|-- AbstractList
+Collection <|- AbstractCollection
+
+Collection <|-- List
+AbstractCollection <|- AbstractList
+AbstractList <|-- ArrayList
+
+class ArrayList {
+Object[] elementData
+size()
+}
+
+ArrayList <|- TimeUnit
+
+enum TimeUnit {
+DAYS
+HOURS
+MINUTES
+}
+
+@enduml

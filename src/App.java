@@ -24,6 +24,8 @@ public class App extends BasicGame {
     @Override
     public void init(GameContainer gc)
             throws SlickException {
+
+      // TODO: Load in level here
         world = new World();
 
     }
@@ -38,7 +40,6 @@ public class App extends BasicGame {
         // Get data about the current input (keyboard state).
         Input input = gc.getInput();
         world.update(input, delta);
-
     }
 
     /** Render the entire screen, so it reflects the current game state.
@@ -50,19 +51,21 @@ public class App extends BasicGame {
         world.render(g);
     }
 
-  public static AppGameContainer getApp() {
-    return app;
-  }
-
-  /** Start-up method. Creates the game and runs it.
+    /** Start-up method. Creates the game and runs it.
      * @param args Command-line arguments (ignored).
      */
     public static void main(String[] args)
-            throws SlickException {
-        app = new AppGameContainer(new App());
-        app.setShowFPS(false);
-        app.setDisplayMode(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, false);
-        app.start();
+        throws SlickException {
+      app = new AppGameContainer(new App());
+      app.setShowFPS(false);
+      app.setDisplayMode(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, false);
+      app.start();
     }
+
+    public static AppGameContainer getApp() {
+    return app;
+  }
+
+
 
 }
