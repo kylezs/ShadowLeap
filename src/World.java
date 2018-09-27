@@ -18,7 +18,7 @@ public class World {
 
 
 	public World() throws SlickException {
-		// set the background tiles
+	// set the background tiles
     grassTile = new Image("assets/grass.png");
     waterTile = new Image("assets/water.png");
 
@@ -69,6 +69,14 @@ public class World {
     }
     player.render();
   }
+	
+	public static void readLevel(int levelNum) {
+		String lvlSrc = "assets/" + levelNum + ".csv";
+	}
+	
+
+	
+	
 
   // Create tiles for however many tiles that fit on the screen
   private static void drawRow(Image tile, float y_coord) {

@@ -1,4 +1,4 @@
 Frog:		Jakenbear 	https://opengameart.org/content/pixel-frog
 Tiles: 		Xarius 		https://opengameart.org/content/pixel-tileset
 Vehicles:	Master484	https://opengameart.org/content/basic-2d-car-collection
-Splat sound bite: LittleRobotSoundFactory https://freesound.org/people/LittleRobotSoundFactory/
+Log:		Kenney.nl	https://opengameart.org/content/platformer-art-pixel-redux

@@ -9,6 +9,7 @@ public class Player extends Sprite {
     super(imageSrc, x, y);
   }
 
+  // A comment in the player class
   public void update(Input input, int delta) {
 
     // move the player one tile in whatever direction key is pressed
