@@ -40,10 +40,10 @@ public class Player extends Sprite {
         position.setX(newPos);
       }
     }
-    // if the player enters the water
-    if (position.getY() <= Constants.START_WATER && position.getY() >= Constants.END_WATER) {
-      dead();
-    }
+//    // if the player enters the water
+//    if (position.getY() <= Constants.START_WATER && position.getY() >= Constants.END_WATER) {
+//      dead();
+//    }
     updateBoundingBox(position.getX(), position.getY());
   }
 }

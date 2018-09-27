@@ -19,10 +19,13 @@ public class World {
 	private static Image treeImage;
 
 	private Player player;
+	private static ArrayList<Interactable> interactables;
 	private ArrayList<EnemyArray> allBusRows = new ArrayList<>();
 
 
 	public World() throws SlickException {
+		
+		interactables = new ArrayList<>();
 
 		player = new Player(Constants.PLAYERSRC, Constants.START_PLAYER_X, Constants.START_PLAYER_Y);
 		
@@ -67,7 +70,7 @@ public class World {
 //		drawRow(grassTile, Constants.START_GRASS);
 //		drawRow(grassTile, Constants.END_GRASS);
 
-		readLevel(0);
+		readLevel(1);
 		// render the buses
 		for (EnemyArray busArray : allBusRows) {
 			for (Enemy bus : busArray.getBusArray()) {
@@ -84,43 +87,46 @@ public class World {
 			String line;
 			while ((line = br.readLine()) != null) {
 				String[] columns = line.split(",");
-					String tileSrc;
 				switch (columns[0]) {
 				case "water":
-					System.out.println("Water tile at " + columns[1] + ", " + columns[2]);
-					tileSrc = Constants.WATERTILESRC;
-					Tile waterTile = new Tile(waterImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]));
+					DeathTile waterTile = new DeathTile(waterImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]));
+					interactables.add(waterTile);
 					waterTile.render();
+					break;
+				case "grass":
+					Tile grassTile = new Tile(grassImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]));
+					grassTile.render();
+					break;
+				case "tree":
+					SolidTile treeTile = new SolidTile(treeImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]));
+					// TODO: May have to make a "solids" array that checks if solid
+					// then can remove treeTile from interactables
+					interactables.add(treeTile);
+					treeTile.render();
+					break;
+					// may be same as racecar
+				case "bus":
+					// bus stuff
+					break;
+				case "racecar":
+					break;
+				case "bulldozer":
+					break;
+					// Below 2 may be the same
+				case "log":
+					break;
+				case "longLog":
+					break;
+				case "turtle":
 					break;
 				default:
 					System.out.println("Warning::: Not a valid tile");
+					break;
 				}
-					
-//				case: "grass":
-//					tileSrc = Constants.GRASSTILESRC;
-//				case "tree":
-//					tileSrc = Constants.TREETILESRC;
-//				case: 
-				}
-				// tile then tile.render()
-				
-				// Note this must be a interactable thing later
-				// make special tile
-//				//treeTile.draw(Integer.parseInt(columns[1]), Integer.parseInt(columns[2]));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-	}
-
-
-
-
-
-	// Create tiles for however many tiles that fit on the screen
-	private static void drawRow(Image tile, float y_coord) {
-		for (int j = 0; j <= (Constants.SCREEN_WIDTH / Constants.TILE_SIZE); j++)
-			tile.draw(Constants.TILE_SIZE * j, y_coord);
 	}
 
 	private EnemyArray busRow(float y, float offset, String dir, float separationDist) {
