@@ -24,13 +24,15 @@ public class Player extends Sprite {
 	  return this.lives;
   }
   
-  public void lostLife() {
+  public void dead() {
 	  if (lives > 0) {
-		  System.out.println(lives);
 		  this.lives--;
+		  System.out.println("You now have " + lives + " lives");
+		  backToStart();
 	  } else {
 		  // To do: End game method
 		  System.out.println("Game is over");
+		  App.getApp().exit();
 	  }
   }
   
@@ -90,4 +92,10 @@ public class Player extends Sprite {
     }
     // update with new possible x and y, check if would be on a solid tile, if yes, don't move, reset BoundingBox
   }
+
+	@Override
+	public void contactPlayer(Player player) {
+		System.out.println("Error::: Calling player against itself");
+		App.getApp().exit();
+		}
 }

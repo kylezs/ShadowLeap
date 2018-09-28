@@ -2,7 +2,7 @@ import helper.Position;
 import org.newdawn.slick.*;
 import utilities.BoundingBox;
 
-public class Sprite {
+public abstract class Sprite implements Interactable {
 
   protected Image spriteImage;
   protected Position position;
@@ -42,7 +42,7 @@ public class Sprite {
 
   public void render() {
     // centre the image by moving it left by half its tile size
-    this.spriteImage.drawCentered(position.getX(), position.getY() + 24);
+    this.spriteImage.drawCentered(position.getX(), position.getY());
   }
 
   public void dead() {

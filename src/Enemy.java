@@ -14,13 +14,19 @@ public class Enemy extends Sprite {
     this.speed = speed;
     this.movesRight = movesRight;
     this.bounces = bounces;
+    
   }
   
-  	// Sourced from sample solution to Project 1
+  public void contactPlayer(Player player) {
+	  player.dead();
+  }
+  
+  	// Sourced (then extended) from sample solution to Project 1
 	private final float getInitialX() {
-		return movesRight ? -Constants.TILE_SIZE / 2
-						 : Constants.SCREEN_WIDTH + Constants.TILE_SIZE / 2;
+		return movesRight ? -this.getBoundingBox().getWidth() / 2
+						 : Constants.SCREEN_WIDTH + this.getBoundingBox().getWidth() / 2;
 	}
+	
 
   public void update(Input input, int delta) {
     if (this.movesRight) {
@@ -31,18 +37,22 @@ public class Enemy extends Sprite {
     	this.position.setX(newPos);
     }
     
+    updateBoundingBox(position.getX(), position.getY());
     if (!bounces) {
         // Sourced from Sample solution to Project 1
-    	if (this.position.getX() > Constants.SCREEN_WIDTH + Constants.TILE_SIZE / 2 || this.position.getX() < -Constants.TILE_SIZE / 2
+    	if (this.getBoundingBox().getLeft() > Constants.SCREEN_WIDTH || this.getBoundingBox().getRight() < 0
     			 || this.position.getY() > Constants.SCREEN_HEIGHT + Constants.TILE_SIZE / 2 || this.position.getY() < -Constants.TILE_SIZE / 2) {
     				this.position.setX(getInitialX());
     			}
     } else {
-    	if (position.getX() > 1000 || position.getX() < 24) {
-    		this.movesRight = !movesRight;
+    	// Do NOT simplify as !this.movesRight. It can glitch and get stuck switching on and off.
+    	if (position.getX() > 1000) {
+    		this.movesRight = false;
+    	}
+    	else if (position.getX() < 24) {
+    		this.movesRight = true;
     	}
     }
-
-    updateBoundingBox(position.getX(), position.getY());
+    
   }
 }

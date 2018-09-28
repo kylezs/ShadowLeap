@@ -30,6 +30,7 @@ public class World {
 	private ArrayList<SolidTile> solidTiles;
 	private ArrayList<Tile> plainTiles;
 	private ArrayList<Sprite> npcSprites;
+	private ArrayList<CollideTile> winningTiles;
 
 	public World() throws SlickException {
 		
@@ -74,7 +75,11 @@ public class World {
 			collisionTile.contactPlayer(player);
 		}
 		
+		
 		for (Sprite sprite : npcSprites) {
+			if (player.isContacting(sprite)) {
+				sprite.contactPlayer(player);
+			}
 			sprite.update(input, delta);
 		}
 	}

@@ -19,10 +19,11 @@ public class Platform extends Enemy {
 	}
 
 
-	public void update(Input input, int delta) {
-		// update
-		// update the player with the platform.
-	}
+//	public void update(Input input, int delta) {
+//		super().update();
+//		// update
+//		// update the player with the platform.
+//	}
 
 	
 	public void contactPlayer(Player player) {

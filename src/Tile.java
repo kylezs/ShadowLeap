@@ -15,7 +15,7 @@ public class Tile {
 	}
 	
 	public void render() {
-		image.draw(position.getX(), position.getY());
+		image.drawCentered(position.getX(), position.getY());
 	}
 	
 	public String toString() {
