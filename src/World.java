@@ -19,64 +19,43 @@ public class World {
 	private static Image treeImage;
 
 	private Player player;
-	private static ArrayList<Interactable> interactables;
-	private ArrayList<EnemyArray> allBusRows = new ArrayList<>();
-
+	private static ArrayList<CollideTile> interactableTiles;
+	private static ArrayList<SolidTile> solidTiles;
+	private static ArrayList<Sprite> npcSprites;
 
 	public World() throws SlickException {
 		
-		interactables = new ArrayList<>();
+		interactableTiles = new ArrayList<>();
+		solidTiles = new ArrayList<>();
 
 		player = new Player(Constants.PLAYERSRC, Constants.START_PLAYER_X, Constants.START_PLAYER_Y);
 		
 		grassImage = new Image(Constants.GRASSTILESRC);
 		waterImage = new Image(Constants.WATERTILESRC);
 		treeImage = new Image(Constants.TREETILESRC);
-
-		// init 5 rows of buses, 432, 480, 528, 576, 624
-		// TODO: Will be generated dynamically by level info
-		//    EnemyArray busArray = busRow(432, 48, Constants.LEFT, (float) 6.5 * Constants.TILE_SIZE);
-		//    allBusRows.add(busArray);
-		//    busArray = busRow(480, 0, Constants.RIGHT, (float) 5 * Constants.TILE_SIZE);
-		//    allBusRows.add(busArray);
-		//    busArray = busRow(528, 64, Constants.LEFT, (float) 12 * Constants.TILE_SIZE);
-		//    allBusRows.add(busArray);
-		//    busArray = busRow(576, 128, Constants.RIGHT, (float) 5 * Constants.TILE_SIZE);
-		//    allBusRows.add(busArray);
-		//    busArray = busRow(624, 250, Constants.LEFT, (float) 6.5 * Constants.TILE_SIZE);
-		//    allBusRows.add(busArray);
 	}
 
 	public void update(Input input, int delta) {
-		// Update all of the sprites in the game
 		player.update(input, delta);
-		for (EnemyArray busArray : allBusRows) {
-			for (Enemy bus : busArray.getBusArray()) {
-				bus.update(input, delta, busArray.getStartNextAt());
-				bus.contactSprite(player);
+		boolean hasContacted = false;
+		CollideTile collisionTile = null;
+		// loop through Tiles
+		for (CollideTile tile : interactableTiles) {
+			if (player.isContacting(tile)) {
+				hasContacted = true;
+				collisionTile = tile;
 			}
 		}
+		if (hasContacted) {
+			collisionTile.contactPlayer(player);
+		}
+		
+		// same for sprites
 	}
 
 	public void render(Graphics g) {
-		// Draw all of the sprites in the game
-
-		// draw the water
-//		for (int y_coord = Constants.START_WATER; y_coord >= Constants.END_WATER; y_coord -= Constants.TILE_SIZE) {
-//			drawRow(waterTile, y_coord);
-//		}
-
-		// draw the grass
-//		drawRow(grassTile, Constants.START_GRASS);
-//		drawRow(grassTile, Constants.END_GRASS);
-
-		readLevel(1);
-		// render the buses
-		for (EnemyArray busArray : allBusRows) {
-			for (Enemy bus : busArray.getBusArray()) {
-				bus.render();
-			}
-		}
+		readLevel(2);
+		
 		player.render();
 	}
 
@@ -90,7 +69,7 @@ public class World {
 				switch (columns[0]) {
 				case "water":
 					DeathTile waterTile = new DeathTile(waterImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]));
-					interactables.add(waterTile);
+					interactableTiles.add(waterTile);
 					waterTile.render();
 					break;
 				case "grass":
@@ -99,20 +78,20 @@ public class World {
 					break;
 				case "tree":
 					SolidTile treeTile = new SolidTile(treeImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]));
-					// TODO: May have to make a "solids" array that checks if solid
-					// then can remove treeTile from interactables
-					interactables.add(treeTile);
+					solidTiles.add(treeTile);
 					treeTile.render();
 					break;
-					// may be same as racecar
+				// may be able to use the same structure as racecar
 				case "bus":
-					// bus stuff
 					break;
 				case "racecar":
 					break;
 				case "bulldozer":
 					break;
-					// Below 2 may be the same
+				case "bike":
+					break;
+					
+				// Below 2 may be the same
 				case "log":
 					break;
 				case "longLog":
@@ -120,13 +99,17 @@ public class World {
 				case "turtle":
 					break;
 				default:
-					System.out.println("Warning::: Not a valid tile");
+					System.out.println("Warning::: Not a valid tile: " + columns[0]);
 					break;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static ArrayList<SolidTile> getSolidTiles() {
+		return solidTiles;
 	}
 
 	private EnemyArray busRow(float y, float offset, String dir, float separationDist) {

@@ -30,16 +30,14 @@ public class Sprite {
     boundingBox.setX(x);
     boundingBox.setY(y);
   }
+  
+  public BoundingBox getBoundingBox() {
+	  return this.boundingBox;
+  }
 
   public void render() {
     // centre the image by moving it left by half its tile size
     this.spriteImage.draw(position.getX(), position.getY());
-  }
-
-  public void contactSprite(Sprite other) {
-    if (this.boundingBox.intersects(other.boundingBox)) {
-      dead();
-    }
   }
 
   public void dead() {

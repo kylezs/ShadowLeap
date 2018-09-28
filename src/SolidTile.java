@@ -7,8 +7,8 @@ public class SolidTile extends CollideTile {
 	}
 
 	@Override
-	public void contactPlayer() {
-		System.out.println("Solid Tile interaction");
+	public void contactPlayer(Player player) {
+		// Do nothing. Maybe one day, solid tiles will do something else
 	}
 
 }

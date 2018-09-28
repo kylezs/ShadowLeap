@@ -3,12 +3,12 @@ import utilities.BoundingBox;
 
 public abstract class CollideTile extends Tile implements Interactable {
 	
-	BoundingBox bb;
+	BoundingBox boundingBox;
 	
 	CollideTile(Image image, float x, float y) {
 		super(image, x, y);
-		bb = new BoundingBox(image, x, y);
+		boundingBox = new BoundingBox(image, x, y);
 	}
 	
-	abstract public void contactPlayer();
+	abstract public void contactPlayer(Player player);
 }

@@ -1,5 +1,4 @@
 public interface Interactable {
 	
-	public void contactPlayer();
-	
+	public void contactPlayer(Player player);
 }

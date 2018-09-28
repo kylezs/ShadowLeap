@@ -17,4 +17,8 @@ public class Tile {
 	public void render() {
 		image.draw(position.getX(), position.getY());
 	}
+	
+	public String toString() {
+		return image.toString();
+	}
 }

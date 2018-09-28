@@ -1,4 +1,5 @@
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class DeathTile extends CollideTile implements Interactable {
 	
@@ -7,7 +8,10 @@ public class DeathTile extends CollideTile implements Interactable {
 	}
 	
 	@Override
-	public void contactPlayer() {
-		System.out.println("Death Tile interaction");
+	public void contactPlayer(Player player) {
+		player.lostLife();
+		System.out.println("Player contacted: Now has lives: " + player.getLives());
+		player.backToStart();
+		
 	}
 }
