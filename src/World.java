@@ -30,6 +30,7 @@ public class World {
 	private ArrayList<SolidTile> solidTiles;
 	private ArrayList<Tile> plainTiles;
 	private ArrayList<Sprite> npcSprites;
+	private ArrayList<SolidEnemy> solidEnemies;
 	private ArrayList<CollideTile> winningTiles;
 
 	public World() throws SlickException {
@@ -39,6 +40,7 @@ public class World {
 		plainTiles = new ArrayList<>();
 		
 		npcSprites = new ArrayList<>();
+		solidEnemies = new ArrayList<>();
 
 		player = new Player(Constants.PLAYERSRC, Constants.START_PLAYER_X, Constants.START_PLAYER_Y);
 		
@@ -61,7 +63,7 @@ public class World {
 	}
 
 	public void update(Input input, int delta) {
-		player.update(input, delta, solidTiles);
+		player.update(input, delta, solidTiles, solidEnemies);
 		boolean hasContacted = false;
 		CollideTile collisionTile = null;
 		// loop through Tiles
@@ -133,7 +135,8 @@ public class World {
 					npcSprites.add(racecar);
 					break;
 				case "bulldozer":
-					Enemy bulldozer = new Enemy(bulldozerImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]), Constants.BULLDOZER_SPEED, Boolean.parseBoolean(columns[3]), false);
+					SolidEnemy bulldozer = new SolidEnemy(bulldozerImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]), Constants.BULLDOZER_SPEED, Boolean.parseBoolean(columns[3]), false);
+					solidEnemies.add(bulldozer);
 					npcSprites.add(bulldozer);
 					break;
 				case "bike":

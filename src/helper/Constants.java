@@ -49,6 +49,7 @@ public class Constants {
 	public static final float LONGLOG_SPEED = 0.07f;
 	public static final float TURTLE_SPEED = 0.85f;
 	
-	public static final int TURTLE_SINK_DELAY = 7;
+	public static final int TURTLE_SINK_DELAY = 70000;
+	public static final int TURTLE_RESURFACE_DELAY = 20000;
 	
 }

@@ -30,9 +30,9 @@ public class Player extends Sprite {
 		  System.out.println("You now have " + lives + " lives");
 		  backToStart();
 	  } else {
-		  // To do: End game method
 		  System.out.println("Game is over");
-		  App.getApp().exit();
+		  
+		  //App.getApp().exit();
 	  }
   }
   
@@ -44,7 +44,7 @@ public class Player extends Sprite {
 	  return this.getBoundingBox().intersects(tile.boundingBox);
   }
 
-  public void update(Input input, int delta, ArrayList<SolidTile> solidTiles) {
+  public void update(Input input, int delta, ArrayList<SolidTile> solidTiles, ArrayList<SolidEnemy> solidEnemies) {
 	  float newX = position.getX();
 	  float newY = position.getY();
 	  
@@ -85,6 +85,13 @@ public class Player extends Sprite {
     		intersects = true;
     	}        
     }
+    
+    for (SolidEnemy enemy : solidEnemies) {
+    	if (afterMoveBB.intersects(enemy.getBoundingBox())) {
+    		intersects = true;
+    	}  
+    }
+    
     if (!intersects) {
     	this.position.setX(newX);
     	this.position.setY(newY);

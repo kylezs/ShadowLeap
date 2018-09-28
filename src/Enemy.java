@@ -27,6 +27,10 @@ public class Enemy extends Sprite {
 						 : Constants.SCREEN_WIDTH + this.getBoundingBox().getWidth() / 2;
 	}
 	
+	public boolean getMovesRight() {
+		return movesRight;
+	}
+	
 
   public void update(Input input, int delta) {
     if (this.movesRight) {
