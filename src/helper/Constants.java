@@ -6,6 +6,15 @@ public class Constants {
 	public static final String WATERTILESRC = "assets/water.png";
 	public static final String TREETILESRC = "assets/tree.png";
 	
+	public static final String BUSSRC = "assets/bus.png";
+	public static final String BULLDOZERSRC = "assets/bulldozer.png";
+	public static final String RACECARSRC = "assets/racecar.png";
+	public static final String BIKESRC = "assets/bike.png";
+	public static final String LOGSRC = "assets/log.png";
+	public static final String LONGLOGSRC = "assets/longlog.png";
+	public static final String TURTLESRC = "assets/turtles.png";
+	
+	
 	
 	public static final String PLAYERSRC = "assets/frog.png";
 	public static final int INITIAL_LIVES = 3;
@@ -31,5 +40,15 @@ public class Constants {
 	public static final float START_GRASS = 672;
 	public static final float END_GRASS = 384;
 
-	public static final float BUS_SPEED = (float) 0.15;
+	public static final float BUS_SPEED = 0.15f;
+	public static final float RACECAR_SPEED =  0.5f;
+	public static final float BULLDOZER_SPEED = 0.05f;
+	public static final float BIKE_SPEED = 0.2f;
+	
+	public static final float LOG_SPEED = 0.1f;
+	public static final float LONGLOG_SPEED = 0.07f;
+	public static final float TURTLE_SPEED = 0.85f;
+	
+	public static final int TURTLE_SINK_DELAY = 7;
+	
 }

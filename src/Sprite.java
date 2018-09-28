@@ -8,14 +8,19 @@ public class Sprite {
   protected Position position;
   private BoundingBox boundingBox;
 
-  public Sprite(String imageSrc, float x, float y) {
-    // Why would the constructor need a path to an image, and a coordinate?
-    try {
-      this.spriteImage = new Image(imageSrc);
-    } catch (SlickException e) {
-      System.out.println("[Error] The image could not be loaded from: " + imageSrc);
-    }
+  public Sprite(Image image, float x, float y) {
+    this.spriteImage = image;
+    position = new Position(x, y);
+    boundingBox = new BoundingBox(spriteImage, x, y);
 
+  }
+  
+  public Sprite(String imageSrc, float x, float y) {
+    try {
+		this.spriteImage = new Image(imageSrc);
+	} catch (SlickException e) {
+		e.printStackTrace();
+	}
     position = new Position(x, y);
     boundingBox = new BoundingBox(spriteImage, x, y);
 
@@ -37,7 +42,7 @@ public class Sprite {
 
   public void render() {
     // centre the image by moving it left by half its tile size
-    this.spriteImage.draw(position.getX(), position.getY());
+    this.spriteImage.drawCentered(position.getX(), position.getY() + 24);
   }
 
   public void dead() {

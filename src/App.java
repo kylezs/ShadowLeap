@@ -29,6 +29,9 @@ public class App extends BasicGame {
         world = new World();
 
     }
+    public World getWorld() {
+    	return world;
+    }
 
     /** Update the game state for a frame.
      * @param gc The Slick game container object.

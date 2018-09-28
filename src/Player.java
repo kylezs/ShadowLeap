@@ -1,6 +1,8 @@
 import helper.Constants;
+
+import java.util.ArrayList;
+
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import utilities.BoundingBox;
 
 public class Player extends Sprite {
@@ -40,7 +42,7 @@ public class Player extends Sprite {
 	  return this.getBoundingBox().intersects(tile.boundingBox);
   }
 
-  public void update(Input input, int delta) {
+  public void update(Input input, int delta, ArrayList<SolidTile> solidTiles) {
 	  float newX = position.getX();
 	  float newY = position.getY();
 	  
@@ -75,7 +77,7 @@ public class Player extends Sprite {
   
     BoundingBox afterMoveBB = new BoundingBox(this.spriteImage, newX, newY);
     boolean intersects = false;
-    for (SolidTile tile : World.getSolidTiles()) {
+    for (SolidTile tile : solidTiles) {
     	// if there are no intersecting tiles, move the player
     	if (afterMoveBB.intersects(tile.boundingBox)) {
     		intersects = true;
