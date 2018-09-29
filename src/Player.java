@@ -11,6 +11,7 @@ public class Player extends Sprite {
 
   
   private int lives = Constants.INITIAL_LIVES;
+  private static boolean lifeToBeLost = true;
   private int winningHolesFilled = 0;
 
   Player(String imageSrc, float x, float y) {
@@ -59,6 +60,7 @@ public class Player extends Sprite {
   public void dead() {
 	  if (lives > 0) {
 		  this.lives--;
+		  System.out.println("Called dead, got back to start");
 		  backToStart();
 	  } else {
 		  gameOver();
@@ -76,6 +78,12 @@ public class Player extends Sprite {
   public void update(Input input, int delta, ArrayList<SolidTile> solidTiles, ArrayList<SolidEnemy> solidEnemies) {
 	  float newX = position.getX();
 	  float newY = position.getY();
+	  
+//	  // player has to be all the way over
+//	  if (lifeToBeLost && (newX > Constants.SCREEN_WIDTH + Constants.TILE_SIZE / 2 || newX < -Constants.TILE_SIZE/2 || newY < -Constants.TILE_SIZE/2 || newY > Constants.SCREEN_HEIGHT + Constants.TILE_SIZE/2)) {
+//		  lifeToBeLost = false;
+//		  dead();
+//	  }
 	  
     // move the player one tile in whatever direction key is pressed
     if (input.isKeyPressed(Input.KEY_UP)) {

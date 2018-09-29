@@ -34,7 +34,7 @@ public class App extends BasicGame {
     public void init(GameContainer gc)
             throws SlickException {
     	// Always start on level 0;
-        world = new World(currentLevel);
+        world = new World(2);
 
     }
     public World getWorld() {

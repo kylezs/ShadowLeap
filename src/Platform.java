@@ -17,6 +17,14 @@ public class Platform extends Enemy {
 	public void addAttachedItem(AttachedItem item) {
 		attachedItems.add(item);
 	}
+	
+	public void removeAttachedItem(AttachedItem removeItem) {
+		for (AttachedItem item : attachedItems) {
+			if (item == removeItem) {
+				attachedItems.remove(removeItem);
+			}
+		}
+	}
 
 	public void contactPlayer(Player player) {}
 	

@@ -25,7 +25,6 @@ public class AttachedItem extends Sprite {
 	}
 	
 	public void setFloating(boolean floating) {
-		System.out.println("Setting floating to: " + floating);
 		AttachedItem.floating = floating;
 	}
 
@@ -36,7 +35,6 @@ public class AttachedItem extends Sprite {
 	}
 	
 	public void contactPlayer(Player player) {
-		System.out.println("Attached item in contact with player");
 		player.addLife();
 		toRender = false;
 		timeElapsed = 0;
@@ -63,6 +61,7 @@ public class AttachedItem extends Sprite {
 			toRender = false;
 			hasRendered = false;
 			timeElapsed = 0;
+			thePlatform.removeAttachedItem(this);
 		}
 		
 		if (toSpawn) {
@@ -104,7 +103,6 @@ public class AttachedItem extends Sprite {
 				this.position.setX(x);
 				this.position.setY(y);
 			}
-			
 		}
 		
 	}

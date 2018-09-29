@@ -108,6 +108,9 @@ public class World {
 				platform.contactPlayer(player, delta);
 			}
 			if (platform.getDoesSink()) {
+				if (!localFloating && player.isContacting(platform)) {
+					onPlatform = false;
+				}
 				platform.setFloating(localFloating);
 				platform.setFloatingAttachedItems();
 			}
