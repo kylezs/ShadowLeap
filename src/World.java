@@ -1,4 +1,5 @@
 import org.newdawn.slick.Graphics;
+import java.util.Random;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -24,6 +25,11 @@ public class World {
 	private static Image longLogImage;
 	private static Image turtleImage;
 	
+	private static Image lifeImage;
+	
+	private static Image newLifeImage;
+	private static AttachedItem newLife;
+	
 
 	private Player player;
 	private ArrayList<CollideTile> interactableTiles;
@@ -32,15 +38,19 @@ public class World {
 	private ArrayList<Sprite> npcSprites;
 	private ArrayList<SolidEnemy> solidEnemies;
 	private ArrayList<Platform> platforms;
-	private ArrayList<CollideTile> winningTiles;
+	private ArrayList<WinningTile> winningTiles;
 	
-	private static int timeElapsed = 0;
+	private static int floatTimeElapsed = 0;
+	private static int newLifeTimeElapsed = 0;
+	
+	private static int randomTime;
 
-	public World() throws SlickException {
+	public World(int currentLevel) throws SlickException {
 		
 		interactableTiles = new ArrayList<>();
 		solidTiles = new ArrayList<>();
 		plainTiles = new ArrayList<>();
+		winningTiles = new ArrayList<>();
 		
 		npcSprites = new ArrayList<>();
 		solidEnemies = new ArrayList<>();
@@ -63,16 +73,23 @@ public class World {
 		logImage = new Image(Constants.LOGSRC);
 		longLogImage = new Image(Constants.LONGLOGSRC);
 		turtleImage = new Image(Constants.TURTLESRC);
+		
+		// little frog image
+		lifeImage = new Image(Constants.LIFESRC);
+		
+		// Don't render until time comes
+		newLifeImage = new Image(Constants.NEWLIFESRC);
+		newLife = new AttachedItem(newLifeImage, 0, 0);
+		
 
-		readLevel(0);
+		readLevel(currentLevel);
 	}
 
 	public void update(Input input, int delta) {
-		timeElapsed += delta;
+		floatTimeElapsed += delta;
+		newLifeTimeElapsed += delta;
 		
 		player.update(input, delta, solidTiles, solidEnemies);
-
-		
 		
 		for (Sprite sprite : npcSprites) {
 			if (player.isContacting(sprite)) {
@@ -81,12 +98,11 @@ public class World {
 			sprite.update(input, delta);
 		}
 		
-		
 		boolean localFloating = true;
-		if (timeElapsed > Constants.TURTLE_RESURFACE_DELAY + Constants.TURTLE_SINK_DELAY) {
+		if (floatTimeElapsed > Constants.TURTLE_RESURFACE_DELAY + Constants.TURTLE_SINK_DELAY) {
 			localFloating = true;
-			timeElapsed = 0;
-		} else if (timeElapsed > Constants.TURTLE_SINK_DELAY) {
+			floatTimeElapsed = 0;
+		} else if (floatTimeElapsed > Constants.TURTLE_SINK_DELAY) {
 			localFloating = false;
 		}
 		boolean onPlatform = false;
@@ -114,6 +130,31 @@ public class World {
 				collisionTile.contactPlayer(player);
 			}
 		}
+		
+		for (WinningTile winningTile : winningTiles) {
+			if (player.getBoundingBox().intersects(winningTile)) {
+				winningTile.contactPlayer(player);
+				Image playerImage = null;
+				try {
+					playerImage = new Image(Constants.PLAYERSRC);
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
+				DeathTile playerTile = new DeathTile(playerImage, winningTile.getCentreX() + Constants.TILE_SIZE / 2, winningTile.getCentreY());
+				interactableTiles.add(playerTile);
+			}
+		}
+		
+		newLife.update(input, delta, platforms);
+		boolean hasContactedNewLife = false;
+		if (player.isContacting(newLife)) {
+			hasContactedNewLife = true;
+		}
+		if (hasContactedNewLife) {
+			newLife.contactPlayer(player);
+		}
+		
+		
 	}
 
 	public void render(Graphics g) {
@@ -129,7 +170,6 @@ public class World {
 			tile.render();
 		}
 		
-		
 		for (Sprite sprite : npcSprites) {
 			sprite.render();
 		}
@@ -138,13 +178,23 @@ public class World {
 		for (Platform platform : platforms) {
 			platform.render();
 		}
+		
+		// rendered at end so it appears on top of other sprites/tiles
 		player.render();
 		
+		for (int i = 0; i < player.getLives(); i++) {
+			System.out.println("You have this many lives: " + player.getLives());
+			lifeImage.draw(Constants.INIT_LIVES_X + i * Constants.LIVES_PADDING, Constants.INIT_LIVES_Y);
+		}
+		
 		// render the lives after the player
+		newLife.render();
+		
 	}
 
 	public void readLevel(int levelNum) {
 		String lvlSrc = "assets/levels/" + levelNum + ".lvl";
+		int lastTreeTileX = 0;
 		try (BufferedReader br =
 				new BufferedReader(new FileReader(lvlSrc))) {
 			String line;
@@ -161,6 +211,12 @@ public class World {
 					break;
 				case "tree":
 					SolidTile treeTile = new SolidTile(treeImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]));
+					// if there's a gap betweeen trees, fill it with WinningTiles
+					if (Integer.parseInt(columns[1]) - lastTreeTileX > Constants.TILE_SIZE) {
+						WinningTile winningTile = new WinningTile(lastTreeTileX + Constants.TILE_SIZE, Integer.parseInt(columns[2]), 2 * Constants.TILE_SIZE, Constants.TILE_SIZE);
+						winningTiles.add(winningTile);
+					}
+					lastTreeTileX = Integer.parseInt(columns[1]);
 					solidTiles.add(treeTile);
 					break;
 				case "bus":

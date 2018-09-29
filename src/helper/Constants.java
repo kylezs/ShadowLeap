@@ -14,10 +14,25 @@ public class Constants {
 	public static final String LONGLOGSRC = "assets/longlog.png";
 	public static final String TURTLESRC = "assets/turtles.png";
 	
-	
+
 	
 	public static final String PLAYERSRC = "assets/frog.png";
+	public static final String LIFESRC = "assets/lives.png";
+	public static final int INIT_LIVES_X = 24;
+	public static final int INIT_LIVES_Y = 744;
+	public static final int LIVES_PADDING = 32;
 	public static final int INITIAL_LIVES = 3;
+	public static final int HOLES_TO_FILL = 5;
+	
+	public static final String NEWLIFESRC = "assets/extralife.png";
+	
+	// in ms
+	public static final int MIN_TIME_LIFE_SPAWN = 25000;
+	public static final int RANGE_LIFE_SPAWN = 10000;
+	public static final int DESPAWN_LIFE = 14000;
+	
+	public static final int MAX_LEVEL = 2;
+	
 
 	/** directions */
 	public static final String RIGHT = "right";
@@ -49,6 +64,7 @@ public class Constants {
 	public static final float LONGLOG_SPEED = 0.07f;
 	public static final float TURTLE_SPEED = 0.85f;
 	
+	// in ms
 	public static final int TURTLE_SINK_DELAY = 7000;
 	public static final int TURTLE_RESURFACE_DELAY = 2000;
 	

@@ -16,21 +16,33 @@ public class App extends BasicGame {
 
     private static AppGameContainer app;
     private World world;
+    private static int currentLevel;
 
     public App() {
         super("Shadow Leap");
+    }
+    
+    public static void nextLevel() {
+    	currentLevel++;
+    }
+    
+    public static int getCurrentLevel() {
+    	return currentLevel;
     }
 
     @Override
     public void init(GameContainer gc)
             throws SlickException {
-
-      // TODO: Load in level here
-        world = new World();
+    	// Always start on level 0;
+        world = new World(currentLevel);
 
     }
     public World getWorld() {
     	return world;
+    }
+    
+    public void setWorld(World newWorld) {
+    	this.world = newWorld;
     }
 
     /** Update the game state for a frame.
@@ -60,14 +72,14 @@ public class App extends BasicGame {
     public static void main(String[] args)
         throws SlickException {
       app = new AppGameContainer(new App());
-      app.setShowFPS(true);
+      app.setShowFPS(false);
       app.setDisplayMode(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, false);
       app.start();
     }
 
     public static AppGameContainer getApp() {
-    return app;
-  }
+    	return app;
+    }
 
 
 

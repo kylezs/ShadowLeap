@@ -6,9 +6,6 @@ public class Tile {
 	private Image image;
 	private Position position;
 	
-	
-	// TODO: Takes in the image, and only once is the image used.
-	// the rest are duplicate images, but of a different tile object
 	Tile(Image image, float x, float y) {
 		this.image = image;
 		position = new Position(x, y);

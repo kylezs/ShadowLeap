@@ -3,16 +3,19 @@ import helper.Constants;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+
 import utilities.BoundingBox;
 
 public class Player extends Sprite {
 
   
   private int lives;
+  private int winningHolesFilled = 0;
 
   Player(String imageSrc, float x, float y) {
     super(imageSrc, x, y);
-    lives = Constants.INITIAL_LIVES;
+    this.lives = Constants.INITIAL_LIVES;
   }
   
   public void backToStart() {
@@ -20,19 +23,46 @@ public class Player extends Sprite {
 	  this.position.setY(Constants.START_PLAYER_Y);
   }
   
+  public void filledHole() {
+	  this.winningHolesFilled++;
+	  if (this.winningHolesFilled == Constants.HOLES_TO_FILL) {
+		  App.nextLevel();
+		  if (App.getCurrentLevel() < Constants.MAX_LEVEL) {
+			  try {
+					App.getApp().reinit();
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
+		  } else {
+			  gameOver();
+		  }
+	  }
+  }
+  
+  public int getWinningHolesFilled() {
+	  return winningHolesFilled;
+  }
+  
+  public void addLife() {
+	System.out.println("Another life!");
+	this.lives = this.lives++;
+	System.out.println("Now you have this many lives: " + this.lives);
+  }
+  
   public int getLives() {
 	  return this.lives;
+  }
+  
+  public void gameOver() {
+	  App.getApp().exit();
   }
   
   public void dead() {
 	  if (lives > 0) {
 		  this.lives--;
-		  System.out.println("You now have " + lives + " lives");
 		  backToStart();
 	  } else {
-		  System.out.println("Game is over");
-		  
-		  //App.getApp().exit();
+		  gameOver();
 	  }
   }
   
