@@ -9,6 +9,7 @@ public class DeathTile extends CollideTile implements Interactable {
 	
 	@Override
 	public void contactPlayer(Player player) {
+		System.out.println("Killed by deathtile");
 		player.dead();
 	}
 }

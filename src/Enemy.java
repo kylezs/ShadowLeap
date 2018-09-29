@@ -31,6 +31,10 @@ public class Enemy extends Sprite {
 		return movesRight;
 	}
 	
+	public float getSpeed() {
+		return this.speed;
+	}
+	
 
   public void update(Input input, int delta) {
     if (this.movesRight) {

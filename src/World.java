@@ -31,7 +31,10 @@ public class World {
 	private ArrayList<Tile> plainTiles;
 	private ArrayList<Sprite> npcSprites;
 	private ArrayList<SolidEnemy> solidEnemies;
+	private ArrayList<Platform> platforms;
 	private ArrayList<CollideTile> winningTiles;
+	
+	private static int timeElapsed = 0;
 
 	public World() throws SlickException {
 		
@@ -41,8 +44,10 @@ public class World {
 		
 		npcSprites = new ArrayList<>();
 		solidEnemies = new ArrayList<>();
+		platforms = new ArrayList<>();
 
 		player = new Player(Constants.PLAYERSRC, Constants.START_PLAYER_X, Constants.START_PLAYER_Y);
+		player.backToStart();
 		
 		// Get images here, so not loading multiple times from source (too many loads causes an error)
 		// tile Images
@@ -59,23 +64,14 @@ public class World {
 		longLogImage = new Image(Constants.LONGLOGSRC);
 		turtleImage = new Image(Constants.TURTLESRC);
 
-		readLevel(1);
+		readLevel(0);
 	}
 
 	public void update(Input input, int delta) {
+		timeElapsed += delta;
+		
 		player.update(input, delta, solidTiles, solidEnemies);
-		boolean hasContacted = false;
-		CollideTile collisionTile = null;
-		// loop through Tiles
-		for (CollideTile tile : interactableTiles) {
-			if (player.isContacting(tile)) {
-				hasContacted = true;
-				collisionTile = tile;
-			}
-		}
-		if (hasContacted) {
-			collisionTile.contactPlayer(player);
-		}
+
 		
 		
 		for (Sprite sprite : npcSprites) {
@@ -83,6 +79,40 @@ public class World {
 				sprite.contactPlayer(player);
 			}
 			sprite.update(input, delta);
+		}
+		
+		
+		boolean localFloating = true;
+		if (timeElapsed > Constants.TURTLE_RESURFACE_DELAY + Constants.TURTLE_SINK_DELAY) {
+			localFloating = true;
+			timeElapsed = 0;
+		} else if (timeElapsed > Constants.TURTLE_SINK_DELAY) {
+			localFloating = false;
+		}
+		boolean onPlatform = false;
+		for (Platform platform : platforms) {
+			if (player.isContacting(platform)) {
+				onPlatform = true;
+				platform.contactPlayer(player, delta);
+			}
+			if (platform.getDoesSink()) {
+				platform.setFloating(localFloating);
+			}
+			platform.update(input, delta);
+		}
+		if (!onPlatform) {
+			boolean hasContacted = false;
+			CollideTile collisionTile = null;
+			// loop through Tiles
+			for (CollideTile tile : interactableTiles) {
+				if (player.isContacting(tile)) {
+					hasContacted = true;
+					collisionTile = tile;
+				}
+			}
+			if (hasContacted) {
+				collisionTile.contactPlayer(player);
+			}
 		}
 	}
 
@@ -99,10 +129,18 @@ public class World {
 			tile.render();
 		}
 		
-		player.render();
+		
 		for (Sprite sprite : npcSprites) {
 			sprite.render();
 		}
+		
+		// platforms are separate because need timing in update
+		for (Platform platform : platforms) {
+			platform.render();
+		}
+		player.render();
+		
+		// render the lives after the player
 	}
 
 	public void readLevel(int levelNum) {
@@ -125,7 +163,6 @@ public class World {
 					SolidTile treeTile = new SolidTile(treeImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]));
 					solidTiles.add(treeTile);
 					break;
-				// may be able to use the same structure as racecar
 				case "bus":
 					Enemy bus = new Enemy(busImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]), Constants.BUS_SPEED, Boolean.parseBoolean(columns[3]), false);
 					npcSprites.add(bus);
@@ -143,18 +180,17 @@ public class World {
 					Enemy bike = new Enemy(bikeImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]), Constants.BIKE_SPEED, Boolean.parseBoolean(columns[3]), true);
 					npcSprites.add(bike);
 					break;
-				// Below 2 may be the same
 				case "log":
 					Platform log = new Platform(logImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]), Constants.LOG_SPEED, Boolean.parseBoolean(columns[3]), false,  false);
-					npcSprites.add(log);
+					platforms.add(log);
 					break;
 				case "longLog":
 					Platform longLog = new Platform(longLogImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]), Constants.LONGLOG_SPEED, Boolean.parseBoolean(columns[3]), false,  false);
-					npcSprites.add(longLog);
+					platforms.add(longLog);
 					break;
 				case "turtle":
-					Platform turtles = new Platform(turtleImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]), Constants.LONGLOG_SPEED, Boolean.parseBoolean(columns[3]), false, true, Constants.TURTLE_SINK_DELAY);
-					npcSprites.add(turtles);
+					Platform turtles = new Platform(turtleImage, Integer.parseInt(columns[1]), Integer.parseInt(columns[2]), Constants.LONGLOG_SPEED, Boolean.parseBoolean(columns[3]), false, true);
+					platforms.add(turtles);
 					break;
 				default:
 					System.out.println("Warning::: Not a valid tile: " + columns[0]);
