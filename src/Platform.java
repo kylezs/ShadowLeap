@@ -39,7 +39,6 @@ public class Platform extends Enemy {
 	}
 	
 	public void setFloatingAttachedItems() {
-		System.out.println("Attached items setting floating to: " + this.floating);
 		for (AttachedItem item : attachedItems) {
 			item.setFloating(this.floating);
 		}

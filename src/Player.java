@@ -43,7 +43,7 @@ public class Player extends Sprite {
   }
   
   public void addLife() {
-	  if (this.lives < 5) {
+	  if (this.lives < Constants.MAX_LIVES) {
 		this.lives++;
 	  }
   }

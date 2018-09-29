@@ -22,6 +22,7 @@ public class Constants {
 	public static final int INIT_LIVES_Y = 744;
 	public static final int LIVES_PADDING = 32;
 	public static final int INITIAL_LIVES = 3;
+	public static final int MAX_LIVES = 5;
 	public static final int HOLES_TO_FILL = 5;
 	
 	public static final String NEWLIFESRC = "assets/extralife.png";

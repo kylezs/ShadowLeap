@@ -53,7 +53,7 @@ public class AttachedItem extends Sprite {
 		// timing of spawn
 		timeElapsed += delta;
 		timeStepElapsed += delta;
-		if (timeElapsed > 3000 && !toRender) {
+		if (timeElapsed > randomTime && !toRender) {
 			// location of spawn
 			toSpawn = true;
 			toRender = true;
@@ -86,7 +86,6 @@ public class AttachedItem extends Sprite {
 			if (timeStepElapsed > Constants.TIME_STEP) {
 				//float oldDeltaPos = movesRight ? deltaPos - Constants.TILE_SIZE : deltaPos + Constants.TILE_SIZE;
 				deltaPos += movesRight ? Constants.TILE_SIZE : -Constants.TILE_SIZE;
-				System.out.println("deltaPos: " + deltaPos);
 				// if cannot move right (bounding boxes do not intersect, switch to moving left
 				this.updateBoundingBox(x + deltaPos, y);
 				if (this.getBoundingBox().intersects(thePlatform.getBoundingBox())) {
