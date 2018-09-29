@@ -9,6 +9,7 @@ import helper.Constants;
 public class AttachedItem extends Sprite {
 	
 	private boolean toRender;
+	private static boolean floating = true;
 	// keeping track of initialisation and already initialised
 	private boolean hasRendered;
 	private static float deltaPos;
@@ -21,6 +22,11 @@ public class AttachedItem extends Sprite {
 	
 	public boolean getToRender() {
 		return toRender;
+	}
+	
+	public void setFloating(boolean floating) {
+		System.out.println("Setting floating to: " + floating);
+		AttachedItem.floating = floating;
 	}
 
 	public AttachedItem(Image image, float x, float y) {
@@ -62,41 +68,50 @@ public class AttachedItem extends Sprite {
 		if (toSpawn) {
 			thePlatform = platforms.get(new Random().nextInt(platforms.size()));
 			toSpawn = false;
-		} if (toRender && !hasRendered) {
+			thePlatform.addAttachedItem(this);
+		}
+		if (toRender && !hasRendered) {
 			float x = thePlatform.position.getX();
 			float y = thePlatform.position.getY();
 			this.position.setX(x);
 			this.position.setY(y);
-			
+			this.updateBoundingBox(x, y);
 			hasRendered = true;
+			
 		} else if (hasRendered) {
-			boolean isSafe;
 			//= thePlatform.getBoundingBox().intersects(this.getBoundingBox());
 			float x = thePlatform.position.getX();
 			float y = thePlatform.position.getY();
-			// delta from centre of platform
 			
 			if (timeStepElapsed > Constants.TIME_STEP) {
-				deltaPos = movesRight ? Constants.TILE_SIZE : -Constants.TILE_SIZE; 
+				//float oldDeltaPos = movesRight ? deltaPos - Constants.TILE_SIZE : deltaPos + Constants.TILE_SIZE;
+				deltaPos += movesRight ? Constants.TILE_SIZE : -Constants.TILE_SIZE;
+				System.out.println("deltaPos: " + deltaPos);
 				// if cannot move right (bounding boxes do not intersect, switch to moving left
 				this.updateBoundingBox(x + deltaPos, y);
 				if (this.getBoundingBox().intersects(thePlatform.getBoundingBox())) {
 					this.position.setX(x + deltaPos);
+					timeStepElapsed = 0;
 				} else {
 					movesRight = !movesRight;
 					// reset bounding box
-					this.updateBoundingBox(x, y);
+					this.updateBoundingBox(this.position.getX(), this.position.getY());
 				}
+			} else {
+				// keep the delta from before
+				x = thePlatform.position.getX() + deltaPos;
+				y = thePlatform.position.getY();
+				this.updateBoundingBox(x, y);
+				this.position.setX(x);
+				this.position.setY(y);
 			}
 			
 		}
 		
-		//this.updateBoundingBox(x, y);
-		
 	}
 	
 	public void render() {
-		if (toRender) {
+		if (toRender && floating) {
 			super.render();
 		}
 	}

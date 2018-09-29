@@ -109,6 +109,7 @@ public class World {
 			}
 			if (platform.getDoesSink()) {
 				platform.setFloating(localFloating);
+				platform.setFloatingAttachedItems();
 			}
 			platform.update(input, delta);
 		}
@@ -179,7 +180,7 @@ public class World {
 			lifeImage.draw(Constants.INIT_LIVES_X + i * Constants.LIVES_PADDING, Constants.INIT_LIVES_Y);
 		}
 		
-		// render the lives after the player
+		// render the newlife after the player
 		newLife.render();
 		
 	}
