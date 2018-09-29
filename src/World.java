@@ -41,9 +41,6 @@ public class World {
 	private ArrayList<WinningTile> winningTiles;
 	
 	private static int floatTimeElapsed = 0;
-	private static int newLifeTimeElapsed = 0;
-	
-	private static int randomTime;
 
 	public World(int currentLevel) throws SlickException {
 		
@@ -87,7 +84,6 @@ public class World {
 
 	public void update(Input input, int delta) {
 		floatTimeElapsed += delta;
-		newLifeTimeElapsed += delta;
 		
 		player.update(input, delta, solidTiles, solidEnemies);
 		
@@ -145,15 +141,12 @@ public class World {
 			}
 		}
 		
-		newLife.update(input, delta, platforms);
-		boolean hasContactedNewLife = false;
-		if (player.isContacting(newLife)) {
-			hasContactedNewLife = true;
-		}
-		if (hasContactedNewLife) {
+		
+		if (player.isContacting(newLife) && !newLife.isCollected()) {
 			newLife.contactPlayer(player);
 		}
 		
+		newLife.update(input, delta, platforms);
 		
 	}
 
@@ -183,7 +176,6 @@ public class World {
 		player.render();
 		
 		for (int i = 0; i < player.getLives(); i++) {
-			System.out.println("You have this many lives: " + player.getLives());
 			lifeImage.draw(Constants.INIT_LIVES_X + i * Constants.LIVES_PADDING, Constants.INIT_LIVES_Y);
 		}
 		

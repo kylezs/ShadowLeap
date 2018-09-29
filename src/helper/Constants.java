@@ -25,6 +25,7 @@ public class Constants {
 	public static final int HOLES_TO_FILL = 5;
 	
 	public static final String NEWLIFESRC = "assets/extralife.png";
+	public static final int TIME_STEP = 2000;
 	
 	// in ms
 	public static final int MIN_TIME_LIFE_SPAWN = 25000;

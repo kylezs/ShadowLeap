@@ -10,12 +10,11 @@ import utilities.BoundingBox;
 public class Player extends Sprite {
 
   
-  private int lives;
+  private int lives = Constants.INITIAL_LIVES;
   private int winningHolesFilled = 0;
 
   Player(String imageSrc, float x, float y) {
     super(imageSrc, x, y);
-    this.lives = Constants.INITIAL_LIVES;
   }
   
   public void backToStart() {
@@ -44,9 +43,9 @@ public class Player extends Sprite {
   }
   
   public void addLife() {
-	System.out.println("Another life!");
-	this.lives = this.lives++;
-	System.out.println("Now you have this many lives: " + this.lives);
+	  if (this.lives < 5) {
+		this.lives++;
+	  }
   }
   
   public int getLives() {

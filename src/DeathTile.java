@@ -1,5 +1,4 @@
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 
 public class DeathTile extends CollideTile implements Interactable {
 	
