@@ -113,10 +113,7 @@ public class AttachedItem extends Sprite {
 	
 	public void render() {
 		if (toRender && floating) {
-			System.out.println("toRender and floating");
 			super.render();
-		} else {
-			System.out.println("Not render and floating");
 		}
 	}
 	
