@@ -51,6 +51,7 @@ public class AttachedItem extends Sprite {
 		// timing of spawn
 		timeElapsed += delta;
 		timeStepElapsed += delta;
+		
 		if (timeElapsed > randomTime && !toRender) {
 			// location of spawn
 			toSpawn = true;
@@ -60,14 +61,16 @@ public class AttachedItem extends Sprite {
 			toSpawn = false;
 			toRender = false;
 			hasRendered = false;
+			deltaPos = 0;
 			timeElapsed = 0;
 			thePlatform.removeAttachedItem(this);
 		}
-		
 		if (toSpawn) {
+			// If something's been despawned, need to select the platform again
 			thePlatform = platforms.get(new Random().nextInt(platforms.size()));
-			toSpawn = false;
 			thePlatform.addAttachedItem(this);
+			floating = thePlatform.getFloating();
+			toSpawn = false;
 		}
 		if (toRender && !hasRendered) {
 			float x = thePlatform.position.getX();
@@ -89,6 +92,7 @@ public class AttachedItem extends Sprite {
 				this.updateBoundingBox(x + deltaPos, y);
 				if (this.getBoundingBox().intersects(thePlatform.getBoundingBox())) {
 					this.position.setX(x + deltaPos);
+					// reset timestep
 					timeStepElapsed = 0;
 				} else {
 					movesRight = !movesRight;
@@ -96,7 +100,7 @@ public class AttachedItem extends Sprite {
 					this.updateBoundingBox(this.position.getX(), this.position.getY());
 				}
 			} else {
-				// keep the delta from before
+				// keep the delta from before, but need to update because platform moved
 				x = thePlatform.position.getX() + deltaPos;
 				y = thePlatform.position.getY();
 				this.updateBoundingBox(x, y);
@@ -109,7 +113,10 @@ public class AttachedItem extends Sprite {
 	
 	public void render() {
 		if (toRender && floating) {
+			System.out.println("toRender and floating");
 			super.render();
+		} else {
+			System.out.println("Not render and floating");
 		}
 	}
 	

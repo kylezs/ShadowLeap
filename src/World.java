@@ -1,5 +1,4 @@
 import org.newdawn.slick.Graphics;
-import java.util.Random;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -85,6 +84,9 @@ public class World {
 	public void update(Input input, int delta) {
 		floatTimeElapsed += delta;
 		
+		if (!player.getOnScreen()) {
+			player.dead();	
+		}
 		player.update(input, delta, solidTiles, solidEnemies);
 		
 		for (Sprite sprite : npcSprites) {

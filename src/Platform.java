@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.newdawn.slick.Image;
 
@@ -19,9 +20,11 @@ public class Platform extends Enemy {
 	}
 	
 	public void removeAttachedItem(AttachedItem removeItem) {
-		for (AttachedItem item : attachedItems) {
+		Iterator<AttachedItem> iterator = attachedItems.iterator();
+		while (iterator.hasNext()) {
+			AttachedItem item = iterator.next();
 			if (item == removeItem) {
-				attachedItems.remove(removeItem);
+				iterator.remove();
 			}
 		}
 	}

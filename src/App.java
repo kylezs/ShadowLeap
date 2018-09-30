@@ -23,7 +23,10 @@ public class App extends BasicGame {
     }
     
     public static void nextLevel() {
-    	currentLevel++;
+    	if (currentLevel < Constants.MAX_LEVEL) {
+    		currentLevel++;
+    	}
+    	
     }
     
     public static int getCurrentLevel() {
