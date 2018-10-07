@@ -9,7 +9,11 @@ import java.io.BufferedReader;
 
 import java.util.ArrayList;
 
-
+/**
+ * Class for the world. Contains the tiles, renders everything from the level
+ * @author Kyle
+ *
+ */
 public class World {
 	
 	private static Image grassImage;
@@ -100,6 +104,7 @@ public class World {
 			sprite.update(input, delta);
 		}
 		
+		// floating if the timer says it should be
 		boolean localFloating = true;
 		if (floatTimeElapsed > Constants.TURTLE_RESURFACE_DELAY + Constants.TURTLE_SINK_DELAY) {
 			localFloating = true;
@@ -137,6 +142,7 @@ public class World {
 			}
 		}
 		
+		// Check the winning tiles, put a player image in the centre of one if the player landed on one
 		for (WinningTile winningTile : winningTiles) {
 			if (player.getBoundingBox().intersects(winningTile)) {
 				winningTile.contactPlayer(player);
@@ -198,8 +204,13 @@ public class World {
 		
 	}
 
+	/**
+	 * Read the level from a CSV. Create the tiles and sprites at the specified positions from the csv
+	 * Add each object to its appropriate array, such that it can be handled appropriately
+	 * @param levelNum
+	 */
 	public void readLevel(int levelNum) {
-		String lvlSrc = "assets/levels/" + levelNum + ".lvl";
+		String lvlSrc = Constants.LEVEL_SRC + levelNum + Constants.LEVEL_EXT;
 		int lastTreeTileX = 0;
 		try (BufferedReader br =
 				new BufferedReader(new FileReader(lvlSrc))) {
@@ -264,6 +275,10 @@ public class World {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return solidTiles
+	 */
 	public ArrayList<SolidTile> getSolidTiles() {
 		return solidTiles;
 	}

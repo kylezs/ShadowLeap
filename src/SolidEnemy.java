@@ -8,12 +8,13 @@ import org.newdawn.slick.Image;
  */
 public class SolidEnemy extends Enemy {
 
+	
 	SolidEnemy(Image image, float x, float y, float speed, boolean movesRight, boolean bounces) {
 		super(image, x, y, speed, movesRight, bounces);
 	}
 	
 	/** 
-	 * Push the player in if in contact
+	 * Push the player in if in contact at the same speed as the solid enemy instance
 	 */
 	public void contactPlayer(Player player) {
 		if (this.getMovesRight()) {

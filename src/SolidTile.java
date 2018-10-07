@@ -1,5 +1,10 @@
 import org.newdawn.slick.Image;
 
+/**
+ * Class for tiles that cannot be jumped on
+ * @author Kyle
+ *
+ */
 public class SolidTile extends CollideTile {
 
 	SolidTile(Image image, float x, float y) {

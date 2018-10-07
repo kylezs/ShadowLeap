@@ -2,6 +2,11 @@ import helper.Position;
 import org.newdawn.slick.*;
 import utilities.BoundingBox;
 
+/**
+ * The blueprint for any sprites created, the player can interact with sprites
+ * @author Kyle
+ *
+ */
 public abstract class Sprite implements Interactable {
 
   protected Image spriteImage;
@@ -15,6 +20,12 @@ public abstract class Sprite implements Interactable {
 
   }
   
+  /**
+   * Initialise a sprite with an source to an image and a position (x, y)
+   * @param imageSrc
+   * @param x
+   * @param y
+   */
   public Sprite(String imageSrc, float x, float y) {
     try {
 		this.spriteImage = new Image(imageSrc);
@@ -26,16 +37,22 @@ public abstract class Sprite implements Interactable {
 
   }
 
-  public void update(Input input, int delta) {
-    // How can this one method deal with different types of sprites?
-    // Answer: overriding
-  }
+  abstract public void update(Input input, int delta);
 
+  /**
+   * Update the x and y coordinates of the bounding box
+   * @param x
+   * @param y
+   */
   public void updateBoundingBox(float x, float y) {
     boundingBox.setX(x);
     boundingBox.setY(y);
   }
   
+  /**
+   * 
+   * @return boundingBox of current sprite
+   */
   public BoundingBox getBoundingBox() {
 	  return this.boundingBox;
   }
@@ -45,11 +62,14 @@ public abstract class Sprite implements Interactable {
     this.spriteImage.drawCentered(position.getX(), position.getY());
   }
 
+  /**
+   * Reni
+   */
   public void dead() {
-    try {
-      App.getApp().reinit();
-    } catch (SlickException e) {
-      e.printStackTrace();
-    }
+//    try {
+//      App.getApp().reinit();
+//    } catch (SlickException e) {
+//      e.printStackTrace();
+//    }
   }
 }
