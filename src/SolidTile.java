@@ -8,7 +8,8 @@ public class SolidTile extends CollideTile {
 
 	@Override
 	public void contactPlayer(Player player) {
-		// Do nothing. Maybe one day, solid tiles will do something else
+		// Do nothing. Maybe one day, solid tiles will do something else...
+    // Like make a sound on contact... one day.
 	}
 
 }

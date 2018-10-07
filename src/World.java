@@ -29,7 +29,6 @@ public class World {
 	private static Image newLifeImage;
 	private static AttachedItem newLife;
 	
-
 	private Player player;
 	private ArrayList<CollideTile> interactableTiles;
 	private ArrayList<SolidTile> solidTiles;
@@ -43,6 +42,7 @@ public class World {
 
 	public World(int currentLevel) throws SlickException {
 		
+		// Initialise all ArrayLists required
 		interactableTiles = new ArrayList<>();
 		solidTiles = new ArrayList<>();
 		plainTiles = new ArrayList<>();
@@ -80,7 +80,11 @@ public class World {
 
 		readLevel(currentLevel);
 	}
-
+	/**
+	 * Updates all game objects. Checks and handles all interactions with the player.
+	 * @param input
+	 * @param delta
+	 */
 	public void update(Input input, int delta) {
 		floatTimeElapsed += delta;
 		
@@ -155,10 +159,13 @@ public class World {
 		newLife.update(input, delta, platforms);
 		
 	}
-
+	/**
+	 * Render all the tiles onto the screen and all the sprites
+	 * @param g
+	 */
 	public void render(Graphics g) {
 		
-		// Keep separate for modification later potentially
+		// Render all the tiles
 		for (Tile tile : plainTiles) {
 			tile.render();
 		}
@@ -181,6 +188,7 @@ public class World {
 		// rendered at end so it appears on top of other sprites/tiles
 		player.render();
 		
+		// Draw the lives
 		for (int i = 0; i < player.getLives(); i++) {
 			lifeImage.draw(Constants.INIT_LIVES_X + i * Constants.LIVES_PADDING, Constants.INIT_LIVES_Y);
 		}

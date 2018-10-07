@@ -48,20 +48,34 @@ public class Player extends Sprite {
 	  return winningHolesFilled;
   }
   
+  /**
+   * Called when player collects a new life object
+   */
   public void addLife() {
 	  if (this.lives < Constants.MAX_LIVES) {
 		this.lives++;
 	  }
   }
   
+  /**
+   * Returns the number of lives the player has left
+   * @return number of lives
+   */
   public int getLives() {
 	  return this.lives;
   }
   
+  /**
+   * Ends the game by closing the window
+   */
   public void gameOver() {
 	  App.getApp().exit();
   }
   
+  /**
+   * Called when player has interacted with an object that kills it
+   * If has already lost all lives, end the game.
+   */
   public void dead() {
 	  if (lives > 0) {
 		  this.lives--;
@@ -71,10 +85,20 @@ public class Player extends Sprite {
 	  }
   }
   
+  /**
+   * Checks if the player is contacting another Sprite
+   * @param other
+   * @return true if the player is intersecting other's bounding box, false otherwise
+   */
   public boolean isContacting(Sprite other) {
     return this.getBoundingBox().intersects(other.getBoundingBox());
   }
   
+  /**
+   * Checks if player is contacting a tile
+   * @param tile
+   * @return true if player's bounding box is intersecting a tile's bounding box
+   */
   public boolean isContacting(CollideTile tile) {
 	  return this.getBoundingBox().intersects(tile.boundingBox);
   }

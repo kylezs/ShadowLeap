@@ -2,6 +2,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.Image;
 import helper.Constants;
 
+/**
+ * Class for Enemy objects
+ * Enemies have a speed, position (x, y), direction of movement (movesRight) and type of movement (bounces)
+ * @author Kyle
+ *
+ */
 public class Enemy extends Sprite {
 
   private float speed;
@@ -17,6 +23,9 @@ public class Enemy extends Sprite {
     
   }
   
+  /**
+   * If the enemy is in contact with the player, kill him
+   */
   public void contactPlayer(Player player) {
 	  player.dead();
   }

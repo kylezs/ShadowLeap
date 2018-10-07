@@ -22,6 +22,10 @@ public class App extends BasicGame {
         super("Shadow Leap");
     }
     
+    /**
+     * Called by player when the player has filled all the necessary holes
+     * Increases the level of the game by 1
+     */
     public static void nextLevel() {
     	if (currentLevel < Constants.MAX_LEVEL) {
     		currentLevel++;
@@ -29,6 +33,10 @@ public class App extends BasicGame {
     	
     }
     
+    /**
+     * 
+     * @return currentLevel the currentLevel of the game
+     */
     public static int getCurrentLevel() {
     	return currentLevel;
     }
@@ -38,12 +46,19 @@ public class App extends BasicGame {
             throws SlickException {
     	// Always start on level 0;
         world = new World(currentLevel);
-
     }
+    
+    /**
+     * @return world
+     */
     public World getWorld() {
     	return world;
     }
     
+    /**
+     * Sets the currentWorld to newWorld
+     * @param newWorld
+     */
     public void setWorld(World newWorld) {
     	this.world = newWorld;
     }
@@ -83,7 +98,5 @@ public class App extends BasicGame {
     public static AppGameContainer getApp() {
     	return app;
     }
-
-
 
 }

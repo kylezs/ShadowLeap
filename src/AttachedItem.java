@@ -6,6 +6,12 @@ import org.newdawn.slick.Input;
 
 import helper.Constants;
 
+/**
+ * Class for AttachedItems, these items appear on logs or turtles
+ * This is always a newlife object as it stands
+ * @author Kyle
+ *
+ */
 public class AttachedItem extends Sprite {
 	
 	private boolean toRender;
@@ -20,20 +26,39 @@ public class AttachedItem extends Sprite {
 	private static Platform thePlatform;
 	private static boolean collected = false;
 	
+	/**
+	 * 
+	 * @return whether to render the object
+	 */
 	public boolean getToRender() {
 		return toRender;
 	}
 	
+	/**
+	 * set the object's floating attribute to param 'floating'
+	 * @param floating
+	 */
 	public void setFloating(boolean floating) {
 		AttachedItem.floating = floating;
 	}
 
+	/**
+	 * Initialize an attached item
+	 * @param image
+	 * @param x
+	 * @param y
+	 */
 	public AttachedItem(Image image, float x, float y) {
 		super(image, x, y);
 		toRender = false;
 		randomTime = getRandomTime();
 	}
 	
+	/**
+	 * Controls what happens if the item is in contact with the player
+	 * Adds a life to the player, removes new life from screen (toRender = false, hasRendered = false)
+	 * Resets the spawn timer, sets collected to true, so as not to call it again
+	 */
 	public void contactPlayer(Player player) {
 		player.addLife();
 		toRender = false;
@@ -42,10 +67,20 @@ public class AttachedItem extends Sprite {
 		hasRendered = false;
 	}
 	
+	/**
+	 * 
+	 * @return whether or not the AttachedItem has been collected
+	 */
 	public boolean isCollected() {
 		return collected;
 	}
 	
+	/**
+	 * Spawns/despawns a newlife if the time is right, controls movement across the selected platform (up and back)
+	 * @param input
+	 * @param delta
+	 * @param platforms
+	 */
 	public void update(Input input, int delta, ArrayList<Platform> platforms) {
 		boolean toSpawn = false;
 		// timing of spawn
@@ -72,6 +107,7 @@ public class AttachedItem extends Sprite {
 			floating = thePlatform.getFloating();
 			toSpawn = false;
 		}
+		// Object's first render
 		if (toRender && !hasRendered) {
 			float x = thePlatform.position.getX();
 			float y = thePlatform.position.getY();
@@ -79,9 +115,8 @@ public class AttachedItem extends Sprite {
 			this.position.setY(y);
 			this.updateBoundingBox(x, y);
 			hasRendered = true;
-			
+		// Object has already been rendered this controls the updating render(s)
 		} else if (hasRendered) {
-			//= thePlatform.getBoundingBox().intersects(this.getBoundingBox());
 			float x = thePlatform.position.getX();
 			float y = thePlatform.position.getY();
 			
@@ -111,12 +146,19 @@ public class AttachedItem extends Sprite {
 		
 	}
 	
+	/**
+	 * Draw the new life on the screen only if the platform it's on is floating and it's meant to be rendered
+	 */
 	public void render() {
 		if (toRender && floating) {
 			super.render();
 		}
 	}
 	
+	/**
+	 * 
+	 * @return a random time (in ms) between in range [MIN_TIME_LIFE_SPAWN, MIN_TIME_LIFE_SPAWN + RANGE_LIFE_SPAWN]
+	 */
 	private int getRandomTime() {
 		return new Random().nextInt(Constants.RANGE_LIFE_SPAWN) + Constants.MIN_TIME_LIFE_SPAWN;
 	}
