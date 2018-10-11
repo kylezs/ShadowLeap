@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.newdawn.slick.Image;
+
+import helper.Constants;
 /**
  * Class for the Platform objects (logs, turtles)
  * @author Kyle
@@ -62,10 +64,15 @@ public class Platform extends Enemy {
 	 */
 	public void contactPlayer(Player player, int delta) {
 		// find the distance moved per frame of the update method of enemy, and move the player by the same amount along x
+		boolean movePlayer = !((player.position.getX() > Constants.SCREEN_WIDTH - Constants.TILE_SIZE/2) || (player.position.getX() < Constants.TILE_SIZE/2 - Constants.TILE_OFFSET));
 		if (this.getMovesRight()) {
-			player.position.setX(player.position.getX() + (delta * this.getSpeed()));
+			if (movePlayer) {
+				player.position.setX(player.position.getX() + (delta * this.getSpeed()));
+			}
 		} else {
-			player.position.setX(player.position.getX() - (delta * this.getSpeed()));
+			if (movePlayer) {
+				player.position.setX(player.position.getX() - (delta * this.getSpeed()));	
+			}
 		}
 		
 	}
