@@ -7,7 +7,7 @@ import utilities.BoundingBox;
  * @author Kyle
  *
  */
-public abstract class Sprite implements Interactable {
+public class Sprite implements Interactable {
 
   protected Image spriteImage;
   protected Position position;
@@ -37,7 +37,7 @@ public abstract class Sprite implements Interactable {
 
   }
 
-  abstract public void update(Input input, int delta);
+  public void update(Input input, int delta) {};
 
   /**
    * Update the x and y coordinates of the bounding box
@@ -63,13 +63,10 @@ public abstract class Sprite implements Interactable {
   }
 
   /**
-   * Reni
+   * Overriden later by classes with sprites that die
    */
-  public void dead() {
-//    try {
-//      App.getApp().reinit();
-//    } catch (SlickException e) {
-//      e.printStackTrace();
-//    }
-  }
+  public void dead() {};
+
+	@Override
+	public void contactPlayer(Player player) {};
 }

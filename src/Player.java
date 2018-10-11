@@ -196,7 +196,7 @@ public class Player extends Sprite {
 		for (SolidEnemy enemy : solidEnemies) {
 			if (afterMoveBB.intersects(enemy.getBoundingBox())) {
 				intersects = true;
-			}  
+			}
 		}
 		
 		if (!intersects) {
